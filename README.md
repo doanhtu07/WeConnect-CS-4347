@@ -1,5 +1,11 @@
 # WeConnect-CS-4347
 
+## Stack
+- Laravel
+- Sail
+- MySQL
+- Inertia React
+
 ## Ultimate Start
 Read through this if you have time: https://bootcamp.laravel.com/
 

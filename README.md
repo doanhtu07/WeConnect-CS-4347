@@ -17,7 +17,7 @@ Just go here to install the dependencies: https://herd.laravel.com/
 - https://marketplace.visualstudio.com/items?itemName=xdebug.php-pack
 - https://marketplace.visualstudio.com/items?itemName=bmewburn.vscode-intelephense-client
 
-## Start
+## Dev
 1. Turn on Docker Desktop
 2. `cd weconnect`
 

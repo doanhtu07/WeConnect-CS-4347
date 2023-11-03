@@ -26,13 +26,13 @@ class DatabaseSeeder extends Seeder
         // -- https://stackoverflow.com/questions/49633881/how-to-do-load-data-local-infile-in-laravel-5-4
 
         $file_path = database_path('sql/load.sql');
-        $app_users_path = database_path('sql/data/app_users.csv');
+        $users_path = database_path('sql/data/users.csv');
         $posts_path = database_path('sql/data/posts.csv');
         $comments_path = database_path('sql/data/comments.csv');
         $follows_path = database_path('sql/data/follows.csv');
 
-        $search_names = ['./data/app_users.csv', './data/posts.csv', './data/comments.csv', './data/follows.csv'];
-        $replace_names = [$app_users_path, $posts_path, $comments_path, $follows_path];
+        $search_names = ['./data/users.csv', './data/posts.csv', './data/comments.csv', './data/follows.csv'];
+        $replace_names = [$users_path, $posts_path, $comments_path, $follows_path];
 
         $sql_contents = file_get_contents($file_path);
 
@@ -42,7 +42,7 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        echo "Load commands: \n".$sql_contents."\n\n";
+        echo "Load commands: \n" . $sql_contents . "\n\n";
 
         $sql_cmds = explode("\n", $sql_contents);
 

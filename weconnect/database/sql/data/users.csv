@@ -1,0 +1,6 @@
+id,name,email,email_verified_at,password,remember_token,created_at,updated_at
+1,Test1,test1@gmail.com,NULL,$2a$10$/aprNVPhAIcndrj2PYBuceLF0r.wGmp4VZoPH51t5FVAhYzuAdI.e,NULL,NULL,NULL
+2,Test2,test2@gmail.com,NULL,$2a$10$/aprNVPhAIcndrj2PYBuceLF0r.wGmp4VZoPH51t5FVAhYzuAdI.e,NULL,NULL,NULL
+3,Test3,test3@gmail.com,NULL,$2a$10$/aprNVPhAIcndrj2PYBuceLF0r.wGmp4VZoPH51t5FVAhYzuAdI.e,NULL,NULL,NULL
+4,Test4,test4@gmail.com,NULL,$2a$10$/aprNVPhAIcndrj2PYBuceLF0r.wGmp4VZoPH51t5FVAhYzuAdI.e,NULL,NULL,NULL
+5,Test5,test5@gmail.com,NULL,$2a$10$/aprNVPhAIcndrj2PYBuceLF0r.wGmp4VZoPH51t5FVAhYzuAdI.e,NULL,NULL,NULL

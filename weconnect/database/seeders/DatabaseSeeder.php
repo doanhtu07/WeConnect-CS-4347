@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
@@ -38,22 +37,22 @@ class DatabaseSeeder extends Seeder
         $sql_contents = file_get_contents($file_path);
 
         if ($sql_contents !== false) {
-            for ($i = 0; $i < sizeof($search_names); $i++) {
+            for ($i = 0; $i < count($search_names); $i++) {
                 $sql_contents = str_replace($search_names[$i], $replace_names[$i], $sql_contents);
             }
         }
 
-        print("Load commands: \n" . $sql_contents . "\n\n");
+        echo "Load commands: \n".$sql_contents."\n\n";
 
         $sql_cmds = explode("\n", $sql_contents);
 
         foreach ($sql_cmds as $key => $cmd) {
-            if ($cmd === "") {
+            if ($cmd === '') {
                 continue;
             }
             DB::unprepared($cmd);
         }
 
-        print("Successfully seeded the database!\n");
+        echo "Successfully seeded the database!\n";
     }
 }

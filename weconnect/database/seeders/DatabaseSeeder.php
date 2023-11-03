@@ -42,7 +42,7 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        echo "Load commands: \n" . $sql_contents . "\n\n";
+        echo "Load commands: \n".$sql_contents."\n\n";
 
         $sql_cmds = explode("\n", $sql_contents);
 

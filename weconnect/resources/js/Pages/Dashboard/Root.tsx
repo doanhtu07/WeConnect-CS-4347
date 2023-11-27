@@ -1,6 +1,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import { PageProps } from '@/types';
+import QueryForm from './Partials/QueryForm';
+import UpdateForm from './Partials/UpdateForm';
 
 export default function Dashboard({ auth }: PageProps) {
 	return (
@@ -23,6 +25,10 @@ export default function Dashboard({ auth }: PageProps) {
 					</div>
 				</div>
 			</div>
+
+			<QueryForm />
+
+			<UpdateForm />
 
 			<div className="pb-12">
 				<div className="max-w-7xl mx-auto sm:px-6 lg:px-8">

@@ -9,6 +9,7 @@
 		"sail": "./vendor/bin/sail",
 		"artisan": "npm run sail -- artisan",
 		"pint": "./vendor/bin/pint",
+		"pail": "npm run artisan -- pail",
 		"prettier": "prettier . --write"
 	},
 	"devDependencies": {

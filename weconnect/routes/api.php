@@ -25,7 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/find-user-by-name', function (Request $request) {
     $userName = $request->input('userName');
 
-    $sql = "select * from users 
+    $sql = "select * from users
             where `name` = '{$userName}'";
 
     Log::info($sql . "\n");
@@ -39,7 +39,7 @@ Route::get('/find-user-by-name', function (Request $request) {
 Route::get('/find-user-by-name-sql-prepare', function (Request $request) {
     $userName = $request->input('userName');
 
-    $sql = "select * from users 
+    $sql = "select * from users
             where `name` = :userName";
 
     $prepared = DB::getPdo()->prepare($sql);
@@ -70,4 +70,15 @@ Route::put('/change-user-name', function (Request $request) {
     Log::info(json_encode($results, JSON_PRETTY_PRINT) . "\n");
 
     return response($userName . " " . $newUserName);
+});
+
+Route::get('/get-all-posts', function () {
+    $sql = "select posts.id AS postId, users.id AS authorId, users.name AS authorName, title, content from weconnect.posts JOIN weconnect.users ON posts.authorId = users.id";
+
+    Log::info($sql . "\n");
+
+    $results = DB::select($sql);
+    Log::info(json_encode($results, JSON_PRETTY_PRINT) . "\n");
+
+    return response(json_encode($results, JSON_PRETTY_PRINT));
 });

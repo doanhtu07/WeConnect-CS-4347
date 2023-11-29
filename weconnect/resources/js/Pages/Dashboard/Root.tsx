@@ -4,6 +4,7 @@ import { PageProps } from '@/types';
 import QueryForm from './Partials/QueryForm';
 import UpdateForm from './Partials/UpdateForm';
 import MakePostForm from './Partials/MakePostForm';
+import PostView from "@/Pages/Dashboard/Partials/PostView";
 
 export default function Dashboard({ auth }: PageProps) {
 	return (
@@ -42,6 +43,8 @@ export default function Dashboard({ auth }: PageProps) {
 					</div>
 				</div>
 			</div>
+
+            <PostView />
 		</AuthenticatedLayout>
 	);
 }

@@ -22,6 +22,28 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/make-post', function (Request $request) {
+    $requestData = $request->input('data');
+
+    if ($requestData && is_array($requestData) && isset($requestData['id'], $requestData['title'], $requestData['content'])) {
+        $authorId = intval($requestData['id']);
+        $title = $requestData['title'];
+        $content = $requestData['content'];
+        $sql = "INSERT INTO posts (title, content, authorId) VALUES (?, ?, ?)";
+    
+        Log::info($request . "HERE \n");
+        Log::info($sql . "\n");
+
+        $results = DB::insert($sql, [$title, $content, $authorId]);
+
+        Log::info(json_encode($results, JSON_PRETTY_PRINT) . "\n");
+
+        return response()->json(['success' => true]);
+    } else {
+        return response()->json(['error' => 'Invalid or missing data'], 400);
+    }
+});
+
 Route::get('/find-user-by-name', function (Request $request) {
     $userName = $request->input('userName');
 

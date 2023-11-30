@@ -150,3 +150,18 @@ Route::post('/follows', function (Request $request) {
     Log::info(json_encode($results, JSON_PRETTY_PRINT) . "\n");
     return response(json_encode($results, JSON_PRETTY_PRINT));
 });
+
+Route::post('/delete-post', function (Request $request) {
+    $postId = $request->input('data')['id'];
+
+    $sql = "DELETE FROM posts WHERE id = ?";
+
+    Log::info($sql . "\n");
+
+    $results = DB::delete($sql, [$postId]);
+
+    Log::info(json_encode($results, JSON_PRETTY_PRINT) . "\n");
+    return response(json_encode($results, JSON_PRETTY_PRINT));
+});
+
+

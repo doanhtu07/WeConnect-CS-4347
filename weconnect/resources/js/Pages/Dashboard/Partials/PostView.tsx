@@ -51,6 +51,20 @@ export default function PostView(
             });
     }
 
+    const deletePost = (id: Number) => {
+        axios
+            .post('/api/delete-post', {
+                data: {id: id},
+            })
+            .then((res) => {
+                console.log(res);
+                getPosts();
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    };
+
 
     return (
         <div className="pb-12">
@@ -74,6 +88,16 @@ export default function PostView(
                                         {post.comments.map((comment) => {return (
                                             <p>{"--- " + comment.authorName + " : " + comment.content}</p>
                                         )})}
+                                        {
+                                            (post.authorId == props.user.id)?
+                                                <div>
+                                                    <button className="text-red-600" onClick={() =>
+                                                    deletePost(post.postId)}>Delete Post</button>
+                                                    <br/>
+                                                </div>
+                                                :
+                                                ""
+                                        }
                                         <br/>
                                     </div>
                                 )})

@@ -30,7 +30,7 @@ Route::post('/make-post', function (Request $request) {
         $title = $requestData['title'];
         $content = $requestData['content'];
         $sql = "INSERT INTO posts (title, content, authorId) VALUES (?, ?, ?)";
-    
+
         Log::info($request . "HERE \n");
         Log::info($sql . "\n");
 
@@ -43,6 +43,30 @@ Route::post('/make-post', function (Request $request) {
         return response()->json(['error' => 'Invalid or missing data'], 400);
     }
 });
+
+Route::post('/follow-user', function (Request $request) {
+    $requestData = $request->input('data');
+
+    if ($requestData && is_array($requestData) && isset($requestData['id'], $requestData['user'])) {
+        $followerId = intval($requestData['id']);
+        $followeeName = $requestData['user'];
+        $sql = "select id from users where name = '{$followeeName}'";
+        Log::info($sql . "\n");
+        $followeeId = intval((DB::select($sql))[0]->id);
+
+        $sql = "INSERT INTO follows (followerId, followeeId) VALUES (?, ?)";
+        Log::info($sql . "\n");
+        $results = DB::insert($sql, [$followerId, $followeeId]);
+
+        Log::info(json_encode($results, JSON_PRETTY_PRINT) . "\n");
+
+        return response()->json(['success' => true]);
+    } else {
+        return response()->json(['error' => 'Invalid or missing data'], 400);
+    }
+});
+
+
 
 Route::get('/find-user-by-name', function (Request $request) {
     $userName = $request->input('userName');
@@ -93,14 +117,51 @@ Route::put('/change-user-name', function (Request $request) {
 
     return response($userName . " " . $newUserName);
 });
-
 Route::get('/get-all-posts', function () {
-    $sql = "select posts.id AS postId, users.id AS authorId, users.name AS authorName, title, content from weconnect.posts JOIN weconnect.users ON posts.authorId = users.id";
+    $sql = "select posts.id AS postId, users.id AS authorId, users.name AS authorName, title, content
+            from weconnect.posts JOIN weconnect.users ON posts.authorId = users.id";
 
     Log::info($sql . "\n");
 
     $results = DB::select($sql);
-    Log::info(json_encode($results, JSON_PRETTY_PRINT) . "\n");
+    for ($i = 0; $i < count($results); $i++) {
+        $results[$i]->comments = DB::select("select users.name AS authorName, comments.content from comments
+                                                    JOIN users ON comments.userId = users.id
+                                                    where comments.postId = {$results[$i]->postId}");
+    }
 
+    Log::info(json_encode($results, JSON_PRETTY_PRINT) . "\n");
     return response(json_encode($results, JSON_PRETTY_PRINT));
 });
+
+Route::post('/follows', function (Request $request) {
+    Log::info(json_encode($request->input('data'), JSON_PRETTY_PRINT));
+    $userId = $request->input('data')['id'];
+
+    $sql = "select followeeId as id from follows where followerId = {$userId}";
+
+    Log::info($sql . "\n");
+
+    $results = DB::select($sql);
+    for ($i = 0; $i < count($results); $i++) {
+        $results[$i] = $results[$i]->id;
+    }
+
+    Log::info(json_encode($results, JSON_PRETTY_PRINT) . "\n");
+    return response(json_encode($results, JSON_PRETTY_PRINT));
+});
+
+Route::post('/delete-post', function (Request $request) {
+    $postId = $request->input('data')['id'];
+
+    $sql = "DELETE FROM posts WHERE id = ?";
+
+    Log::info($sql . "\n");
+
+    $results = DB::delete($sql, [$postId]);
+
+    Log::info(json_encode($results, JSON_PRETTY_PRINT) . "\n");
+    return response(json_encode($results, JSON_PRETTY_PRINT));
+});
+
+

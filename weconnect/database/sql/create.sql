@@ -20,7 +20,7 @@ CREATE TABLE
         `title` varchar(255) NOT NULL,
         `content` mediumtext NOT NULL,
         `authorId` bigint unsigned NOT NULL,
-        CONSTRAINT fk_author FOREIGN KEY (`authorId`) REFERENCES `users` (`id`)
+        CONSTRAINT fk_author FOREIGN KEY (`authorId`) REFERENCES `users` (`id`) ON DELETE CASCADE
     ) AUTO_INCREMENT = 6;
 
 CREATE TABLE
@@ -29,15 +29,15 @@ CREATE TABLE
         `userId` bigint UNSIGNED NOT NULL,
         `postId` bigint UNSIGNED NOT NULL,
         `content` mediumtext NOT NULL,
-        CONSTRAINT fk_user FOREIGN KEY (`userId`) REFERENCES `users` (`id`),
-        CONSTRAINT fk_post FOREIGN KEY (`postId`) REFERENCES `posts` (`id`)
+        CONSTRAINT fk_user FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+        CONSTRAINT fk_post FOREIGN KEY (`postId`) REFERENCES `posts` (`id`) ON DELETE CASCADE
     ) AUTO_INCREMENT = 6;
 
 CREATE TABLE
     `follows` (
         `followerId` bigint UNSIGNED NOT NULL,
         `followeeId` bigint UNSIGNED NOT NULL,
-        CONSTRAINT fk_follower FOREIGN KEY (`followerId`) REFERENCES `users` (`id`),
-        CONSTRAINT fk_followee FOREIGN KEY (`followeeId`) REFERENCES `users` (`id`),
+        CONSTRAINT fk_follower FOREIGN KEY (`followerId`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+        CONSTRAINT fk_followee FOREIGN KEY (`followeeId`) REFERENCES `users` (`id`) ON DELETE CASCADE,
         CONSTRAINT uni_follow UNIQUE (`followerId`, `followeeId`)
     );

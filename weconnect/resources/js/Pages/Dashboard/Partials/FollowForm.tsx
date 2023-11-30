@@ -7,11 +7,9 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import axios from 'axios';
 import { User } from '@/types';
 
-export default function FollowForm(
-	props:{user:User}
-)  {
+export default function FollowForm(props: { user: User }) {
 	const { data, setData, processing, errors } = useForm({
-        id: props.user.id,
+		id: props.user.id,
 		user: '',
 	});
 
@@ -38,10 +36,7 @@ export default function FollowForm(
 
 					<form onSubmit={submit}>
 						<div>
-							<InputLabel
-								htmlFor="user"
-								value="Follow User"
-							/>
+							<InputLabel htmlFor="user" value="Follow User" />
 							<TextInput
 								id="user"
 								type="text"

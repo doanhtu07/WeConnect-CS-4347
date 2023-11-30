@@ -5,9 +5,12 @@ import QueryForm from './Partials/QueryForm';
 import UpdateForm from './Partials/UpdateForm';
 import MakePostForm from './Partials/MakePostForm';
 import FollowForm from './Partials/FollowForm';
-import PostView from "@/Pages/Dashboard/Partials/PostView";
+import PostView from '@/Pages/Dashboard/Partials/PostView';
+import { useState } from 'react';
 
 export default function Dashboard({ auth }: PageProps) {
+	const [flipNewPost, setFlipNewPost] = useState<boolean>(false);
+
 	return (
 		<AuthenticatedLayout
 			user={auth.user}
@@ -33,11 +36,16 @@ export default function Dashboard({ auth }: PageProps) {
 
 			<UpdateForm />
 
-			<MakePostForm user={auth.user}/>
+			<FollowForm user={auth.user} />
 
-            <FollowForm user={auth.user}/>
+			<MakePostForm
+				user={auth.user}
+				signalNewPost={() => {
+					setFlipNewPost(!flipNewPost);
+				}}
+			/>
 
-            <PostView user={auth.user}/>
+			<PostView user={auth.user} flipNewPost={flipNewPost} />
 		</AuthenticatedLayout>
 	);
 }

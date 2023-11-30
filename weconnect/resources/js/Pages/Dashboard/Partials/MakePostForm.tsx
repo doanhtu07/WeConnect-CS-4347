@@ -7,13 +7,14 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import axios from 'axios';
 import { User } from '@/types';
 
-export default function MakePostForm(
-	props:{user:User}
-)  {
+export default function MakePostForm(props: {
+	user: User;
+	signalNewPost: () => void;
+}) {
 	const { data, setData, processing, errors } = useForm({
-        id: props.user.id,
+		id: props.user.id,
 		title: '',
-        content: '',
+		content: '',
 	});
 
 	const submit: FormEventHandler = (e) => {
@@ -24,11 +25,13 @@ export default function MakePostForm(
 			})
 			.then((res) => {
 				console.log(res.data);
+				props.signalNewPost();
 			})
 			.catch((err) => {
 				console.error(err);
 			});
 	};
+
 	return (
 		<div className="pb-12">
 			<div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -39,10 +42,7 @@ export default function MakePostForm(
 
 					<form onSubmit={submit}>
 						<div>
-							<InputLabel
-								htmlFor="title"
-								value="Make a title"
-							/>
+							<InputLabel htmlFor="title" value="Make a title" />
 
 							<TextInput
 								id="title"
@@ -61,7 +61,7 @@ export default function MakePostForm(
 								className="mt-2"
 							/>
 						</div>
-                        <div>
+						<div>
 							<InputLabel
 								htmlFor="content"
 								value="Write Content"

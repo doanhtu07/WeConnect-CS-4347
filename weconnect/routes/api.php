@@ -73,12 +73,18 @@ Route::put('/change-user-name', function (Request $request) {
 });
 
 Route::get('/get-all-posts', function () {
-    $sql = "select posts.id AS postId, users.id AS authorId, users.name AS authorName, title, content from weconnect.posts JOIN weconnect.users ON posts.authorId = users.id";
+    $sql = "select posts.id AS postId, users.id AS authorId, users.name AS authorName, title, content
+            from weconnect.posts JOIN weconnect.users ON posts.authorId = users.id";
 
     Log::info($sql . "\n");
 
     $results = DB::select($sql);
-    Log::info(json_encode($results, JSON_PRETTY_PRINT) . "\n");
+    for ($i = 0; $i < count($results); $i++) {
+        $results[$i]->comments = DB::select("select users.name AS authorName, comments.content from comments
+                                                    JOIN users ON comments.userId = users.id
+                                                    where comments.postId = {$results[$i]->postId}");
+    }
 
+    Log::info(json_encode($results, JSON_PRETTY_PRINT) . "\n");
     return response(json_encode($results, JSON_PRETTY_PRINT));
 });

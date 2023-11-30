@@ -9,7 +9,8 @@ export default function PostView(){
         "authorId": -1,
         "authorName": "",
         "title": "",
-        "content": ""
+        "content": "",
+        "comments": [{authorName: "", content: ""}]
     }])
 
     useEffect(() => {
@@ -37,7 +38,14 @@ export default function PostView(){
                 <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6 grid gap-6">
                     <div className="text-gray-900 dark:text-gray-100">
                         {data.map((post) => {return (
-                                <p>{post.authorName + " : " + post.content}</p>
+                            <div>
+                                <p>{post.authorName + " : " + post.title}</p>
+                                <p>{post.content}</p>
+                                {post.comments.map((comment) => {return (
+                                    <p>{"--- " + comment.authorName + " : " + comment.content}</p>
+                                )})}
+                                <br/>
+                            </div>
                         )})}
                     </div>
                 </div>

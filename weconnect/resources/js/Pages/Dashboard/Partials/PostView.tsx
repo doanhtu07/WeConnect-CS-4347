@@ -51,30 +51,36 @@ export default function PostView(
             });
     }
 
+
     return (
         <div className="pb-12">
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6 grid gap-6">
                     <div className="text-gray-900 dark:text-gray-100">
-                        {data.map((post) => {return (
-                            <div>
-                                {
-                                    followData.includes(post.authorId) ?
-                                        <p>{post.authorName} (Followed)</p> :
-                                        <p>{post.authorName}</p>
-                                }
-                                <p>{post.title}</p>
-                                <p>{post.content}</p>
-                                <p>Comments:</p>
-                                {post.comments.map((comment) => {return (
-                                    <p>{"--- " + comment.authorName + " : " + comment.content}</p>
-                                )})}
-                                <br/>
-                            </div>
-                        )})}
+                        {
+                            (followData[0] == -1 || data[0].postId == -1) ?
+                                <p>Loading Posts...</p>
+                            :
+                                data.map((post) => {return (
+                                    <div>
+                                        {
+                                            followData.includes(post.authorId) ?
+                                                <p>{post.authorName} (Followed)</p> :
+                                                <p>{post.authorName}</p>
+                                        }
+                                        <p>{post.title}</p>
+                                        <p>{post.content}</p>
+                                        <p>Comments:</p>
+                                        {post.comments.map((comment) => {return (
+                                            <p>{"--- " + comment.authorName + " : " + comment.content}</p>
+                                        )})}
+                                        <br/>
+                                    </div>
+                                )})
+                        }
                     </div>
                 </div>
             </div>
         </div>
-    );
+    )
 }
